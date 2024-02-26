@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do list</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <h2>To Do List</h2>
+        <label for="newTask">New Task: </label>
+        <input type="text" id="newTask" placeholder="Enter New Task" ng-model="newTask">
+        <button ng-click="addTask()">Add Task</button>
+
+        <ul>
+            <li ng-repeat="task in tasks">
+                <span ng-hide="task.editing">{{task.name}}</span>
+                <input type="text" ng-model="task.name" ng-show="task.editing">
+                <button ng-click="editTask(task)">Edit Task</button>
+                <button ng-click="deleteTask(task)">Delete Task</button>
+                <button ng-click="saveTask(task)" ng-show="task.editing">Save Task</button>
+                <button ng-click="cancelTask(task)" ng-show="task.editing">Cancel Task</button>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var app = angular.module('myApp',[]);
+
+        app.controller('myCtrl', function($scope){
+            $scope.tasks=[];
+            $scope.addTask=function(){
+                if ($scope.newTask){
+                    $scope.tasks.push({name: $scope.newTask, editing:false});
+                    $scope.newTask='';
+                }
+            };
+            $scope.editTask = function(task){
+                task.editing=true;
+            };
+            $scope.saveTask = function(task){
+                task.editing=false;
+            };
+            $scope.cancelTask = function(task){
+                task.editing=false;
+            };
+            $scope.deleteTask = function(task){
+                var index = $scope.tasks.indexOf(task);
+                if (index !== -1){
+                    $scope.tasks.splice(index,1);
+                }
+            };
+        });
+    </script>
+</body>
+</html>

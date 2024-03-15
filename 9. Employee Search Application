@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee Search Application</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    </head>
+    <body ng-app="empSearchApp">
+        <h2>Employee Search Application</h2>
+        <div ng-controller="empSearchAppCntrl">
+            Search by Employee Name: 
+            <input type="text" ng-model="searchName">
+            Seach by Employee Salary:
+            <input type="number" ng-model="searchSalary">
+            <button ng-click="clearFilters()">Clear Filters</button>
+            <br>
+            <h3>List of Employees</h3>
+            <table border="1">
+                <tr>
+                    <th>SL NO</th>
+                    <th>EMP NAME</th>
+                    <th>SALARY</th>
+                </tr>
+                <tr ng-repeat="(index, emp) in empList | filter:{name: searchName, salary:searchSalary}">
+                    <td>{{index + 1}}</td>
+                    <td>{{emp.name}}</td>
+                    <td>{{emp.salary}}</td>
+                </tr>
+            </table>
+        </div>
+        <script>
+            var app = angular.module('empSearchApp', []);
+            app.controller('empSearchAppCntrl', function($scope){
+                $scope.empList = [{name:'Harish', salary:500000},
+                {name:'Chetan', salary:400000},
+                {name:'Manju', salary:300000},
+                {name:'Prasanth', salary:500000},
+                {name:'Manasa', salary:600000}
+            ];
+            $scope.clearFilters = function(){
+                $scope.searchName = '';
+                $scope.searchSalary = '';
+            }
+            });
+        </script>
+    </body>
+</html>

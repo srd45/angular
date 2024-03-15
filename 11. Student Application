@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="studentApp">
+    <head>
+        <title>Student App Converter</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    </head>
+    <body>
+        <div ng-controller="studentController as ctrl">
+            <h2>Student Details</h2>
+            <ul>
+                <li ng-repeat="student in ctrl.students">
+                    {{student.name|uppercase}}-{{student.age}}
+                </li>
+            </ul>
+        </div>
+        <script>
+            var app = angular.module('studentApp', []);
+            app.controller('studentController', function(){
+                this.students = [
+                    {name:'John Doe', age:20},
+                    {name:'Jane Smith', age:22},
+                    {name:'Alice Joy', age:21}
+                ];
+            });
+        </script>
+    </body>
+</html>

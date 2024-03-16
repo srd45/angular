@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head>
+        <title>CRUD Application</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    </head>
+    <body ng-controller="userCtrl">
+        <h2>User Management</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <button ng-click="editUser(user)">Edit</button>
+                        <button ng-click="deleteUser(user)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h2>Create User</h2>
+        <input type="text" ng-model="newUser.name" placeholder="Name">
+        <input type="text" ng-model="newUser.email" placeholder="Email">
+        <button ng-click="createUser()">Create</button>
+        <hr>
+        <h2>Edit User</h2>
+        <input type="text" ng-model="editUser.name" placeholder="Name">
+        <input type="text" ng-model="editUser.email" placheloder="Email">
+        <button ng-click="updateUser()">Update</button>
+        <script>
+            var app = angular.module('myApp', []);
+            app.controller('userCtrl', function($scope){
+                $scope.users=[
+                    {name: 'abcd', email:'abcd@gmail.com'},
+                    {name: 'trainee', email:'trainee@yahoo.com'}
+                ];
+                $scope.newUser = {};
+                $scope.createUser = function(){
+                    $scope.users.push($scope.newUser);
+                    $scope.newUser={};
+                };
+                $scope.editUser = function(user){
+                    $scope.editUser = user;
+                };
+                $scope.updateUser = function(){
+                    $scope.editUser = {};
+                };
+                $scope.deleteUser = function(user){
+                    var index = $scope.users.indexOf(user);
+                    $scope.users.splice(index, 1);
+                };
+            });
+        </script>
+    </body>
+</html>
